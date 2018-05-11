@@ -22,7 +22,7 @@ text_file = open("words.txt", "r")
 words = text_file.read().split('\n')
 
 # picking random index in list
-index = random.randint(0, len(words))
+index = random.randint(0, len(words)-1)
 
 # picking word
 chosen_word = words[index]
@@ -34,39 +34,40 @@ num_guesses = 12
 
 #starting game
 game_over = False
-lst_characters_guessed = []
-lst_current_guess = ["?"]*len_chosen_word
-have_letter_guesses = False
+guessed_letters = []
+guessed_words = []
+player_current_guess = ["?"]*len_chosen_word
 
 while (not game_over):
-	if have_letter_guesses:
-		print("Your current guess is: " + lst_to_str(lst_current_guess, ''))
-		print("You have " + str(num_guesses) + " guesses left")
-		print("Here are all the characters you guessed so far: " + lst_to_str(lst_characters_guessed, ','))
+	print("********************** PLAYER TURN **********************")
+	print("You have " + str(num_guesses) + " guesses left")
+	print("Here are all the characters you guessed so far: " + lst_to_str(guessed_letters, ','))
+	print("Here are all the words you guessed so far: " + lst_to_str(guessed_words, ','))
+	print("Your current guess is: " + lst_to_str(player_current_guess, ''))
 	valid_user_input = False
 	while(not valid_user_input):
 		user_input = raw_input("What is your guess?\n")
 		if len(user_input) == 1:
 			valid_user_input = True
 			have_letter_guesses = True
-			### TODO 1: set  lst_current_guess to the output of replace_with_input
-			lst_characters_guessed.append(user_input)
-			print(lst_to_str(lst_current_guess, ''))
+			player_current_guess = # TODO: set this
+			guessed_letters.append(user_input)
+			print(lst_to_str(player_current_guess, ''))
 		elif len(user_input) == len_chosen_word:
 			valid_user_input = True
 			if user_input == chosen_word:
-				lst_current_guess = chosen_word.split("(?!^)")
+				player_current_guess = chosen_word.split("(?!^)")
 			else:
 				print("Incorrect Guess")
+			# TODO: What else do we need to update?
+
 		else:
 			print("Invalid input (either 0 characters or too long)")
 
-	### TODO 2: Add line to decrease num_guesses by 1
-
-	if (sum([i=='?' for i in lst_current_guess]) == 0):
+	# TODO We need to update something
+	num_guesses = num_guesses - 1
+	if (sum([i=='?' for i in player_current_guess]) == 0):
+		print("*********************** GAME OVER ***********************")
 		print("You did it!!! the word was " + chosen_word)
 		game_over = True
-
-
-	### TODO 3: Add an 'if statement' to handle losing a game
-
+	# TODO write the if statement for losing the game
